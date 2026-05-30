@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marlisa's Pastries - Handcrafted with Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #c0556a;
+            --secondary: #f7c59f;
+            --accent: #e8a0a0;
+            --dark: #2d1b1b;
+            --light: #fff8f5;
+            --white: #ffffff;
+            --brown: #8b4513;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fff0e6; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 248, 245, 0.97);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(192,85,106,0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), #e8789a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: Georgia, serif;
+            font-style: italic;
+        }
+
+        .logo-text span { color: var(--brown); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-btn {
+            background: var(--primary) !important;
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600 !important;
+        }
+
+        .nav-btn:hover {
+            background: #a8405a !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(192,85,106,0.4);
+        }
+
+        .nav-btn::after { display: none !important; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe4e8 40%, #fff8f0 100%);
+            display: flex;
+            align-items: center;
+            padding: 120px 5% 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🌸';
+            position: absolute;
+            font-size: 300px;
+            top: -50px;
+            right: -50px;
+            opacity: 0.07;
+        }
+
+        .hero::after {
+            content: '🥐';
+            position: absolute;
+            font-size: 200px;
+            bottom: -30px;
+            left: -30px;
+            opacity: 0.07;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 1;
+            max-width: 580px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            color: var(--dark);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            display: block;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 35px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(192,85,106,0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(192,85,106,0.45);
+            background: #a8405a;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            padding: 16px 35px;
+            border: 2px solid var(--primary);
+            border-radius: 35px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .hero-pastry-card {
+            background: white;
+            border-radius: 30px;
+            padding: 25px;
+            width: 370px;
+            box-shadow: 0 20px 60px rgba(192,85,106,0.15);
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pastry-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .hero-card-img-wrapper {
+            width: 100%;
+            height: 280px;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #fff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-card-img-wrapper:hover img { transform: scale(1.05); }
+
+        .pastry-card-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            text-align: center;
+            font-family: Georgia, serif;
+            margin-bottom: 4px;
+        }
+
+        .pastry-card-sub {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .pastry-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 13px;
+            background: var(--light);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .pastry-card-label { color: #888; font-size: 12px; }
+        .pastry-card-value { font-weight: 700; color: var(--dark); font-size: 13px; }
+
+        .pastry-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--primary), #e8789a);
+            border-radius: 14px;
+        }
+
+        .pastry-price { color: white; font-size: 20px; font-weight: 800; }
+
+        .pastry-order-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pastry-order-btn:hover {
+            background: var(--dark);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* ===== FLOATING ELEMENTS ===== */
+        .float-el {
+            position: absolute;
+            animation: floatEl 6s ease-in-out infinite;
+            font-size: 30px;
+            opacity: 0.4;
+        }
+
+        .float-el:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .float-el:nth-child(2) { top: 70%; right: 15%; animation-delay: 1s; }
+        .float-el:nth-child(3) { top: 40%; left: 5%; animation-delay: 2s; }
+
+        @keyframes floatEl {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            background: var(--primary);
+            padding: 18px 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 50px;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ===== SECTION COMMONS ===== */
+        .section-header { text-align: center; margin-bottom: 60px; }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(192,85,106,0.1);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            color: var(--dark);
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-family: Georgia, serif;
+        }
+
+        .section-header h2 span { color: var(--primary); font-style: italic; }
+
+        .section-header p {
+            color: #777;
+            font-size: 17px;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== MENU ===== */
+        .menu { padding: 90px 5%; background: var(--light); }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .menu-tab {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 2px solid #e0d0d5;
+            background: white;
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-tab.active,
+        .menu-tab:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(192,85,106,0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(192,85,106,0.15);
+        }
+
+        .menu-card-img {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-card:hover .menu-card-img img { transform: scale(1.08); }
+
+        .menu-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .menu-card-fav {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .menu-card-fav:hover { transform: scale(1.2); }
+        .menu-card-body { padding: 20px; }
+
+        .menu-card-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 6px;
+            font-family: Georgia, serif;
+        }
+
+        .menu-card-desc {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .menu-card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .menu-tag {
+            background: var(--light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: Georgia, serif;
+        }
+
+        .menu-price span {
+            font-size: 13px;
+            color: #999;
+            font-weight: 400;
+            font-family: sans-serif;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .add-btn:hover { background: #a8405a; transform: rotate(90deg) scale(1.1); }
+
+        /* ===== GALLERY ===== */
+        .gallery { padding: 90px 5%; background: white; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            transition: all 0.4s ease;
+            background: #fff;
+        }
+
+        .gallery-item:first-child {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            height: 450px;
+            font-size: 120px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img { transform: scale(1.08); }
+
+        .gallery-item:nth-child(1) { background: linear-gradient(135deg, #ffe4e8, #ffd6de); }
+        .gallery-item:nth-child(2) { background: linear-gradient(135deg, #fff8e1, #ffe082); }
+        .gallery-item:nth-child(3) { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+        .gallery-item:nth-child(4) { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+        .gallery-item:nth-child(5) { background: linear-gradient(135deg, #fce4ec, #f48fb1); }
+        .gallery-item:nth-child(6) { background: linear-gradient(135deg, #fff3e0, #ffcc80); }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(45,27,27,0.75));
+            padding: 25px 15px 15px;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+            z-index: 3;
+        }
+
+        .gallery-item:hover .gallery-overlay { transform: translateY(0); }
+        .gallery-overlay span { color: white; font-size: 14px; font-weight: 600; }
+
+        /* ===== FOOTER ===== */
+        footer { background: var(--dark); padding: 70px 5% 30px; }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 15px 0 20px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .footer-col h4 {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+            position: relative;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-links a:hover { color: var(--primary); padding-left: 5px; }
+
+        .footer-contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .footer-contact-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(192,85,106,0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .footer-contact-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .footer-contact-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-contact-value {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.4;
+        }
+
+        .footer-contact-value a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-contact-value a:hover { color: var(--primary); }
+
+        .footer-hours-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p { color: rgba(255,255,255,0.5); }
+        .footer-heart { color: var(--primary); }
+
+        .social-links { display: flex; gap: 12px; }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover { background: var(--primary); transform: translateY(-3px); }
+
+        /* ===== CART WIDGET ===== */
+        .cart-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(192,85,106,0.5);
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .cart-widget:hover { transform: scale(1.1); background: #a8405a; }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--brown);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== SCROLL TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.show { opacity: 1; }
+        .scroll-top:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+        /* ===== NOTIFICATION ===== */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 18px 22px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(200%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            border-left: 4px solid var(--primary);
+            max-width: 300px;
+        }
+
+        .notification.show { transform: translateX(0); }
+        .notif-icon { font-size: 26px; }
+        .notif-text h4 { color: var(--dark); font-size: 14px; font-weight: 700; }
+        .notif-text p { color: #999; font-size: 12px; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .menu-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+            .gallery-item:first-child {
+                grid-column: 1 / 3;
+                grid-row: auto;
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 78px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 30px 5%;
+                gap: 20px;
+                box-shadow: 0 10px 30px rgba(192,85,106,0.15);
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 100px 5% 60px;
+            }
+
+            .hero-buttons { justify-content: center; }
+            .hero-visual { margin-top: 40px; width: 100%; }
+            .hero-pastry-card { width: 100%; max-width: 360px; margin: 0 auto; }
+            .hero-card-img-wrapper { height: 240px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .menu-card-img { height: 260px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item { height: 180px; }
+            .gallery-item:first-child { grid-column: 1 / -1; height: 280px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-pastry-card { padding: 18px; }
+            .hero-card-img-wrapper { height: 200px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item { height: 150px; font-size: 50px; }
+            .gallery-item:first-child { height: 220px; }
+            .menu-card-img { height: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- FLOATING ELEMENTS -->
+<div class="float-el">🌸</div>
+<div class="float-el">🍓</div>
+<div class="float-el">✨</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+    <a href="#" class="logo">
+        <div class="logo-icon">🥐</div>
+        <span class="logo-text">Marlisa's <span>Pastries</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="cart.html" class="nav-btn">🛒 Order Now</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>
+            Handcrafted Pastries
+            <span>Baked with Love</span>
+            by Marlisa
+        </h1>
+        <p>Every bite tells a story. From buttery croissants to decadent cakes, Marlisa bakes each pastry with the finest ingredients and a heart full of passion — fresh daily, just for you.</p>
+        <div class="hero-buttons">
+            <a href="#menu" class="btn-primary">🍰 Explore Menu</a>
+            <a href="cart.html" class="btn-outline">🛒 Order Now</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-pastry-card">
+            <div class="hero-card-img-wrapper">
+                <img
+                    src="rose-cake.jpg"
+                    alt="Marlisa's Signature Rose Cake"
+                    onerror="this.parentElement.style.display='none';"
+                />
+            </div>
+            <div class="pastry-card-title">Marlisa's Signature Rose Cake</div>
+            <div class="pastry-card-sub">Today's Featured Pastry</div>
+            <div class="pastry-card-row">
+                <span class="pastry-card-label">🧈 Ingredients</span>
+                <span class="pastry-card-value">100% Organic</span>
+            </div>
+            <div class="pastry-card-row">
+                <span class="pastry-card-label">⏰ Baked Fresh</span>
+                <span class="pastry-card-value">Every Morning</span>
+            </div>
+            <div class="pastry-card-row">
+                <span class="pastry-card-label">🌟 Rating</span>
+                <span class="pastry-card-value">⭐⭐⭐⭐⭐ 5.0</span>
+            </div>
+            <div class="pastry-price-row">
+                <span class="pastry-price">$38.00</span>
+                <button class="pastry-order-btn"
+                    onclick="addToCart('Signature Rose Cake', 38, 'rose-cake.jpg', '🎂');
+                             window.location.href='cart.html';">
+                    Order Now
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+    <div class="marquee-track">
+        <div class="marquee-item">🥐 Fresh Croissants</div>
+        <div class="marquee-item">🎂 Custom Cakes</div>
+        <div class="marquee-item">🧁 Cupcakes</div>
+        <div class="marquee-item">🍰 Cheesecake</div>
+        <div class="marquee-item">🍩 Donuts</div>
+        <div class="marquee-item">🍪 Cookies</div>
+        <div class="marquee-item">🥖 Artisan Bread</div>
+        <div class="marquee-item">🧇 Waffles</div>
+        <div class="marquee-item">🥐 Fresh Croissants</div>
+        <div class="marquee-item">🎂 Custom Cakes</div>
+        <div class="marquee-item">🧁 Cupcakes</div>
+        <div class="marquee-item">🍰 Cheesecake</div>
+        <div class="marquee-item">🍩 Donuts</div>
+        <div class="marquee-item">🍪 Cookies</div>
+        <div class="marquee-item">🥖 Artisan Bread</div>
+        <div class="marquee-item">🧇 Waffles</div>
+    </div>
+</div>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+    <div class="section-header">
+        <div class="section-tag">🍰 Our Menu</div>
+        <h2>Marlisa's <span>Sweet Creations</span></h2>
+        <p>Each pastry is handcrafted daily using only the finest organic ingredients, baked with love in Marlisa's kitchen.</p>
+    </div>
+    <div class="menu-tabs">
+        <button class="menu-tab active" onclick="filterMenu(this, 'all')">All Items</button>
+        <button class="menu-tab" onclick="filterMenu(this, 'cakes')">🎂 Cakes</button>
+        <button class="menu-tab" onclick="filterMenu(this, 'pastries')">🥐 Pastries</button>
+        <button class="menu-tab" onclick="filterMenu(this, 'cookies')">🍪 Cookies</button>
+        <button class="menu-tab" onclick="filterMenu(this, 'breads')">🥖 Breads</button>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+
+        <!-- CARD 1 — SIGNATURE ROSE CAKE -->
+        <div class="menu-card" data-category="cakes">
+            <div class="menu-card-img">
+                <img
+                    src="rose-cake.jpg"
+                    alt="Signature Rose Cake"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🎂');"
+                />
+                <div class="menu-card-badge">⭐ Best Seller</div>
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Signature Rose Cake</div>
+                <div class="menu-card-desc">Layers of vanilla sponge with rosewater cream and fresh strawberries, elegantly decorated with handcrafted red roses.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">Gluten-Free Option</span>
+                    <span class="menu-tag">Customizable</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$38 <span>/ slice $6</span></div>
+                    <button class="add-btn"
+                        onclick="addToCart('Signature Rose Cake', 38, 'rose-cake.jpg', '🎂')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 — BUTTER CROISSANT -->
+        <div class="menu-card" data-category="pastries">
+            <div class="menu-card-img">
+                <img
+                    src="butter-croissant.jpg"
+                    alt="Butter Croissant"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.background='linear-gradient(135deg,#fff8e1,#ffe082)';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🥐');"
+                />
+                <div class="menu-card-badge" style="background:#f7941d;">🔥 Fresh Daily</div>
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Butter Croissant</div>
+                <div class="menu-card-desc">Flaky, golden layers of French-style croissant baked fresh every morning.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">Vegetarian</span>
+                    <span class="menu-tag">Fresh Daily</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$4.50</div>
+                    <button class="add-btn"
+                        onclick="addToCart('Butter Croissant', 4.5, 'butter-croissant.jpg', '🥐')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 — LAVENDER CUPCAKES -->
+        <div class="menu-card" data-category="cakes">
+            <div class="menu-card-img">
+                <img
+                    src="lavender-cupcakes.jpg"
+                    alt="Lavender Cupcakes"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🧁');"
+                />
+                <div class="menu-card-badge" style="background:#9c27b0;">💜 New</div>
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Lavender Cupcakes</div>
+                <div class="menu-card-desc">Delicate lavender-infused cupcakes with honey buttercream frosting, beautifully garnished.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">Vegan Option</span>
+                    <span class="menu-tag">Seasonal</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$5.00 <span>/ each</span></div>
+                    <button class="add-btn"
+                        onclick="addToCart('Lavender Cupcakes', 5, 'lavender-cupcakes.jpg', '🧁')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 — CHOCO CHIP COOKIES -->
+        <div class="menu-card" data-category="cookies">
+            <div class="menu-card-img">
+                <img
+                    src="choco-chip-cookies.jpg"
+                    alt="Choco Chip Cookies"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.background='linear-gradient(135deg,#fff3e0,#ffcc80)';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🍪');"
+                />
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Choco Chip Cookies</div>
+                <div class="menu-card-desc">Classic soft-baked cookies loaded with premium Belgian chocolate chips.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">Nut-Free</span>
+                    <span class="menu-tag">Kids Fave</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$12 <span>/ dozen</span></div>
+                    <button class="add-btn"
+                        onclick="addToCart('Choco Chip Cookies', 12, 'choco-chip-cookies.jpg', '🍪')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — STRAWBERRY CHEESECAKE -->
+        <div class="menu-card" data-category="cakes">
+            <div class="menu-card-img">
+                <img
+                    src="strawberry-cheesecake.jpg"
+                    alt="Strawberry Cheesecake"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.background='linear-gradient(135deg,#fce4ec,#f48fb1)';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🍰');"
+                />
+                <div class="menu-card-badge" style="background:#e91e63;">💖 Fan Fave</div>
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Strawberry Cheesecake</div>
+                <div class="menu-card-desc">Creamy New York-style cheesecake topped with fresh strawberry compote.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">No Bake Option</span>
+                    <span class="menu-tag">Party Size</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$42 <span>/ whole</span></div>
+                    <button class="add-btn"
+                        onclick="addToCart('Strawberry Cheesecake', 42, 'strawberry-cheesecake.jpg', '🍰')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 — SOURDOUGH LOAF -->
+        <div class="menu-card" data-category="breads">
+            <div class="menu-card-img">
+                <img
+                    src="sourdough-loaf.jpg"
+                    alt="Sourdough Loaf"
+                    onerror="this.style.display='none';
+                             this.parentElement.style.background='linear-gradient(135deg,#e8f5e9,#c8e6c9)';
+                             this.parentElement.style.fontSize='90px';
+                             this.parentElement.insertAdjacentText('beforeend','🥖');"
+                />
+                <div class="menu-card-fav" onclick="toggleFav(this)">🤍</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-name">Sourdough Loaf</div>
+                <div class="menu-card-desc">Traditionally fermented sourdough with a crispy crust and chewy center.</div>
+                <div class="menu-card-tags">
+                    <span class="menu-tag">Artisan</span>
+                    <span class="menu-tag">Slow Fermented</span>
+                </div>
+                <div class="menu-card-footer">
+                    <div class="menu-price">$9.00</div>
+                    <button class="add-btn"
+                        onclick="addToCart('Sourdough Loaf', 9, 'sourdough-loaf.jpg', '🥖')">+</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+    <div class="section-header">
+        <div class="section-tag">📸 Gallery</div>
+        <h2>From <span>Marlisa's Kitchen</span></h2>
+        <p>A peek into the beautiful creations made fresh daily in Marlisa's bakery.</p>
+    </div>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="rose-cake.jpg" alt="Signature Rose Cake" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>🌹 Signature Rose Cake</span></div>
+        </div>
+        <div class="gallery-item">
+            <img src="butter-croissant.jpg" alt="Butter Croissant" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>🥐 Butter Croissants</span></div>
+        </div>
+        <div class="gallery-item">
+            <img src="lavender-cupcakes.jpg" alt="Lavender Cupcakes" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>💜 Lavender Cupcakes</span></div>
+        </div>
+        <div class="gallery-item">
+            <img src="strawberry-cheesecake.jpg" alt="Strawberry Cheesecake" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>🍰 Strawberry Cheesecake</span></div>
+        </div>
+        <div class="gallery-item">
+            <img src="choco-chip-cookies.jpg" alt="Chocolate Chip Cookies" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>🍪 Chocolate Chip Cookies</span></div>
+        </div>
+        <div class="gallery-item">
+            <img src="sourdough-loaf.jpg" alt="Artisan Sourdough" onerror="this.remove();" />
+            <div class="gallery-overlay"><span>🥖 Artisan Sourdough</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand footer-col">
+            <a href="#" class="logo">
+                <div class="logo-icon">🥐</div>
+                <span class="logo-text">Marlisa's <span>Pastries</span></span>
+            </a>
+            <p>Handcrafted with love at Beverly Green B3-18B, Belian, Batam Kota, Kepulauan Riau 29464. Marlisa bakes every item fresh daily using only the finest organic ingredients.</p>
+            <div class="social-links">
+                <a href="#" class="social-link" title="Instagram">📸</a>
+                <a href="#" class="social-link" title="Facebook">📘</a>
+                <a href="#" class="social-link" title="TikTok">🎵</a>
+                <a href="#" class="social-link" title="Pinterest">📌</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Menu</h4>
+            <ul class="footer-links">
+                <li><a href="#menu">→ Cakes & Tarts</a></li>
+                <li><a href="#menu">→ Croissants</a></li>
+                <li><a href="#menu">→ Cupcakes</a></li>
+                <li><a href="#menu">→ Cookies</a></li>
+                <li><a href="#menu">→ Artisan Breads</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <ul class="footer-links">
+                <li><a href="#gallery">→ Gallery</a></li>
+                <li><a href="cart.html">→ Place an Order</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <div class="footer-contact-cards">
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">📍</div>
+                    <div class="footer-contact-text">
+                        <span class="footer-contact-label">Location</span>
+                        <span class="footer-contact-value">
+                            Beverly Green B3-18B,<br>
+                            Belian, Batam Kota,<br>
+                            Kepulauan Riau, 29464
+                        </span>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">📞</div>
+                    <div class="footer-contact-text">
+                        <span class="footer-contact-label">Phone</span>
+                        <span class="footer-contact-value">
+                            <a href="tel:+6281363869750">+62 813-6386-9750</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">📧</div>
+                    <div class="footer-contact-text">
+                        <span class="footer-contact-label">Email</span>
+                        <span class="footer-contact-value">
+                            <a href="mailto:marlisa.fifthseason@gmail.com">marlisa.fifthseason@gmail.com</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">⏰</div>
+                    <div class="footer-contact-text">
+                        <span class="footer-contact-label">Bakery Hours</span>
+                        <div class="footer-contact-value footer-hours-mini">
+                            <span>Mon–Fri: 8:00 AM – 5:00 PM</span>
+                            <span>Sat & Sun: 12:00 PM – 3:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 Marlisa's Pastries. Made with <span class="footer-heart">❤️</span> & lots of butter.</p>
+        <p>
+            Beverly Green B3-18B, Belian, Batam Kota, Kepulauan Riau 29464 &nbsp;|&nbsp;
+            <a href="tel:+6281363869750" style="color:rgba(255,255,255,0.5);text-decoration:none;">+62 813-6386-9750</a>
+            &nbsp;|&nbsp;
+            <a href="mailto:marlisa.fifthseason@gmail.com" style="color:rgba(255,255,255,0.5);text-decoration:none;">marlisa.fifthseason@gmail.com</a>
+        </p>
+    </div>
+</footer>
+
+<!-- CART WIDGET -->
+<div class="cart-widget" onclick="window.location.href='cart.html'" title="View Cart">
+    🛒
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification">
+    <span class="notif-icon" id="notifIcon">🎂</span>
+    <div class="notif-text">
+        <h4 id="notifTitle">Added to Cart!</h4>
+        <p id="notifMsg">Your pastry has been added.</p>
+    </div>
+</div>
+
+<script>
+    /* ===== CART SYSTEM ===== */
+    const CART_KEY = 'marlisaCart';
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        const cart = getCart();
+        const count = cart.reduce((sum, item) => sum + item.qty, 0);
+        const badge = document.getElementById('cartCount');
+        if (badge) badge.textContent = count;
+    }
+
+    function addToCart(name, price, image, emoji) {
+        const cart = getCart();
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({
+                name: name,
+                price: Number(price),
+                image: image || '',
+                emoji: emoji || '🍰',
+                qty: 1
+            });
+        }
+        saveCart(cart);
+        showNotification(emoji || '🛒', 'Added to Cart!', `${name} has been added.`);
+    }
+
+    function openCart() {
+        window.location.href = 'Marlisa 4BB Cart.html';
+    }
+
+    /* ===== FAVOURITES ===== */
+    function toggleFav(el) {
+        el.textContent = el.textContent === '🤍' ? '❤️' : '🤍';
+        if (el.textContent === '❤️') {
+            showNotification('❤️', 'Saved to Favorites!', 'This pastry has been added to your favorites.');
+        }
+    }
+
+    /* ===== MENU FILTER ===== */
+    function filterMenu(btn, category) {
+        document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.menu-card').forEach(card => {
+            card.style.display = (category === 'all' ||
+                card.dataset.category === category) ? '' : 'none';
+        });
+    }
+
+    /* ===== MOBILE NAV ===== */
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('navLinks');
+        const hamburger = document.getElementById('hamburger');
+        if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+            nav.classList.remove('open');
+        }
+    });
+
+    /* ===== SMOOTH SCROLL ===== */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+        });
+    });
+
+    /* ===== SCROLL TOP ===== */
+    window.addEventListener('scroll', () => {
+        document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+    });
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ===== NOTIFICATION ===== */
+    function showNotification(icon, title, msg) {
+        document.getElementById('notifIcon').textContent = icon;
+        document.getElementById('notifTitle').textContent = title;
+        document.getElementById('notifMsg').textContent = msg;
+        const notif = document.getElementById('notification');
+        notif.classList.add('show');
+        setTimeout(() => notif.classList.remove('show'), 4000);
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card, .gallery-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(25px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    /* ===== INIT ===== */
+    updateCartCount();
+
+    console.log("%c🌹 Marlisa's Pastries - Ready!",
+        'color:#c0556a; font-size:16px; font-weight:bold;');
+</script>
+</body>
+</html>

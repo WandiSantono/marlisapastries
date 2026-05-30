@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marlisa's Pastries - Cart & Checkout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary: #c0556a;
+      --secondary: #f7c59f;
+      --dark: #2d1b1b;
+      --light: #fff8f5;
+      --white: #ffffff;
+      --brown: #8b4513;
+      --muted: #777;
+      --line: #f0e0e5;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff0f3 0%, #fff8f5 55%, #fffdfb 100%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 248, 245, 0.97);
+      backdrop-filter: blur(10px);
+      padding: 14px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 20px rgba(192,85,106,0.12);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), #e8789a);
+      font-size: 22px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: Georgia, serif;
+      font-style: italic;
+    }
+
+    .logo-text span { color: var(--brown); }
+
+    .back-link {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      padding: 10px 20px;
+      border: 2px solid rgba(192,85,106,0.25);
+      border-radius: 999px;
+      background: white;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(192,85,106,0.25);
+    }
+
+    /* ===== PAGE ===== */
+    .page {
+      padding: 30px 5% 70px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ===== HERO CARD ===== */
+    .hero-card {
+      background: linear-gradient(135deg, rgba(192,85,106,0.08), rgba(247,197,159,0.12));
+      border: 1px solid rgba(192,85,106,0.12);
+      border-radius: 24px;
+      padding: 28px 30px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .hero-card h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-family: Georgia, serif;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+
+    .hero-card h1 span {
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    .hero-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .badge {
+      background: white;
+      color: var(--primary);
+      border: 1px solid rgba(192,85,106,0.2);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ===== TWO COLUMN LAYOUT ===== */
+    .layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ===== PANEL ===== */
+    .panel {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.07);
+      overflow: hidden;
+      border: 1px solid rgba(192,85,106,0.08);
+    }
+
+    .panel-header {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid #f3e7ea;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-header-icon { font-size: 28px; }
+
+    .panel-header-text h2 {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+
+    .panel-header-text p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ===== CART LIST ===== */
+    .cart-list { padding: 16px 18px 4px; }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 96px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border: 1.5px solid #f2e5e9;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      background: #fffdfd;
+      transition: box-shadow 0.3s;
+    }
+
+    .cart-item:hover {
+      box-shadow: 0 6px 20px rgba(192,85,106,0.1);
+      border-color: rgba(192,85,106,0.2);
+    }
+
+    .thumb {
+      width: 96px;
+      height: 96px;
+      border-radius: 16px;
+      background: #fff8f9;
+      border: 1.5px solid #f4e3e7;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      flex-shrink: 0;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .item-name {
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: var(--dark);
+      font-family: Georgia, serif;
+    }
+
+    .item-meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .item-price {
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 8px;
+      font-size: 17px;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      justify-self: end;
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #fff0f4;
+      color: var(--primary);
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .qty {
+      min-width: 28px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--dark);
+    }
+
+    .remove-btn {
+      background: #fff1f1;
+      color: #c94040;
+      border: none;
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .remove-btn:hover {
+      background: #c94040;
+      color: white;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      padding: 50px 24px 30px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-state .emoji {
+      font-size: 64px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .empty-state h3 {
+      font-size: 22px;
+      color: var(--dark);
+      margin-bottom: 10px;
+      font-family: Georgia, serif;
+    }
+
+    .empty-state p {
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* ===== BROWSE PASTRIES BUTTON ===== */
+    .browse-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background: var(--primary);
+      color: white;
+      padding: 14px 30px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 5px 20px rgba(192,85,106,0.3);
+      margin-top: 10px;
+    }
+
+    .browse-btn:hover {
+      background: #a8405a;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(192,85,106,0.35);
+    }
+
+    /* ===== SUMMARY ===== */
+    .summary-box {
+      border-top: 1px solid #f3e7ea;
+      background: #fffafb;
+    }
+
+    .summary { padding: 20px 24px 16px; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--dark);
+    }
+
+    .summary-row .label { color: var(--muted); }
+    .summary-row .value { font-weight: 700; }
+
+    .summary-divider {
+      border: none;
+      border-top: 1px dashed #e6cfd6;
+      margin: 10px 0 14px;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .clear-row { padding: 0 24px 24px; }
+
+    .clear-btn {
+      width: 100%;
+      background: white;
+      border: 2px solid #f1d8df;
+      color: #b04a60;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .clear-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* ===== CHECKOUT PANEL ===== */
+    .checkout {
+      position: sticky;
+      top: 88px;
+    }
+
+    .checkout-body { padding: 20px 24px 24px; }
+
+    .form-group {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      border: 2px solid #f0e0e5;
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+      background: #fff8f9;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--dark);
+      transition: all 0.25s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(192,85,106,0.08);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .place-btn {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      padding: 16px 18px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(192,85,106,0.25);
+      margin-top: 8px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .place-btn:hover {
+      background: #a8405a;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(192,85,106,0.3);
+    }
+
+    .place-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .checkout-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .checkout-trust {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ===== NOTIFICATION ===== */
+    .notif {
+      position: fixed;
+      top: 90px;
+      right: 24px;
+      background: white;
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateX(200%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 9999;
+      border-left: 4px solid var(--primary);
+      max-width: 290px;
+    }
+
+    .notif.show { transform: translateX(0); }
+    .notif-icon { font-size: 26px; }
+    .notif-title { color: var(--dark); font-size: 14px; font-weight: 700; }
+    .notif-msg { color: #999; font-size: 12px; margin-top: 2px; }
+
+    /* ===== SUCCESS SCREEN ===== */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 30px;
+    }
+
+    .success-screen .big-emoji {
+      font-size: 80px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .success-screen h2 {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .success-screen p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .success-screen a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .success-screen a:hover {
+      background: #a8405a;
+      transform: translateY(-2px);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 30px 18px 40px;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid #f3e7ea;
+      background: linear-gradient(135deg, #fff0f3, #fff8f5);
+      margin-top: 40px;
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), #e8789a);
+      font-size: 20px;
+    }
+
+    .footer-logo .logo-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: Georgia, serif;
+      font-style: italic;
+    }
+
+    .footer-logo .logo-text span { color: var(--brown); }
+
+    .footer-tagline {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-bottom {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .checkout { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      nav { gap: 10px; }
+      .logo-text { font-size: 18px; }
+      .back-link { font-size: 13px; padding: 9px 14px; }
+      .page { padding: 16px 4% 50px; }
+      .hero-card { padding: 20px; }
+
+      .cart-item {
+        grid-template-columns: 80px 1fr;
+        gap: 12px;
+      }
+
+      .controls {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .thumb { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-icon">🥐</div>
+    <span class="logo-text">Marlisa's <span>Pastries</span></span>
+  </a>
+  <a href="index.html" class="back-link">← Back to Shop</a>
+</nav>
+
+<div class="page">
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <h1>Your Cart & <span>Checkout</span></h1>
+    <p>Review your pastries, adjust quantities, then place your order — Marlisa will confirm via WhatsApp within 2 hours!</p>
+    <div class="badges">
+      <span class="badge">🎂 Freshly Baked Daily</span>
+      <span class="badge">🔒 Secure Order</span>
+      <span class="badge">💬 WhatsApp Confirmation</span>
+      <span class="badge">🚗 Home Delivery</span>
+    </div>
+  </div>
+
+  <!-- TWO COLUMN -->
+  <div class="layout">
+
+    <!-- ===== CART PANEL ===== -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-header-icon">🛒</div>
+        <div class="panel-header-text">
+          <h2>Your Cart</h2>
+          <p id="cartCountLabel">0 items selected</p>
+        </div>
+      </div>
+
+      <div id="cartList" class="cart-list"></div>
+
+      <!-- ✅ Empty State -->
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <span class="emoji">🛒</span>
+        <h3>Your cart is empty</h3>
+        <p>You haven't added any pastries yet.<br>Head back to the shop and pick your favorites!</p>
+        <a href="index.html" class="browse-btn">🍰 Browse Pastries</a>
+      </div>
+
+      <!-- Summary - DELIVERY FEE & TAX TOTALLY REMOVED -->
+      <div id="summaryBox" class="summary-box" style="display:none;">
+        <div class="summary">
+
+          <!-- ✅ Subtotal Row Only -->
+          <div class="summary-row">
+            <span class="label">Subtotal</span>
+            <span class="value" id="subtotal">$0.00</span>
+          </div>
+
+          <!-- ❌ Delivery Fee Row - TOTALLY REMOVED -->
+          <!-- ❌ Tax Row - TOTALLY REMOVED -->
+          <!-- ❌ Free Delivery Note - TOTALLY REMOVED -->
+
+          <hr class="summary-divider" />
+
+          <!-- ✅ Total = Subtotal Only -->
+          <div class="summary-total">
+            <span>Total</span>
+            <span id="total">$0.00</span>
+          </div>
+
+        </div>
+        <div class="clear-row">
+          <button class="clear-btn" onclick="clearCart()">🗑 Clear All Items</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CHECKOUT PANEL ===== -->
+    <section class="panel checkout">
+
+      <!-- Success Screen -->
+      <div id="successScreen" class="success-screen">
+        <span class="big-emoji">🎉</span>
+        <h2>Order Sent!</h2>
+        <p>Your order has been sent to Marlisa via WhatsApp. She will confirm your order within 2 hours. Thank you!</p>
+        <a href="index.html">🍰 Continue Shopping</a>
+      </div>
+
+      <!-- Checkout Form -->
+      <div id="checkoutPanel">
+        <div class="panel-header">
+          <div class="panel-header-icon">📋</div>
+          <div class="panel-header-text">
+            <h2>Your Details</h2>
+            <p>Required for delivery & confirmation</p>
+          </div>
+        </div>
+
+        <div class="checkout-body">
+          <form id="checkoutForm" onsubmit="event.preventDefault(); placeOrder();">
+
+            <!-- ✅ Full Name -->
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="fullName"
+                placeholder="e.g. Sarah Johnson" required />
+            </div>
+
+            <!-- ✅ Phone Number -->
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" id="phone"
+                placeholder="+62 813-..." required />
+            </div>
+
+            <!-- ❌ Email - REMOVED -->
+
+            <!-- ✅ Delivery Address -->
+            <div class="form-group">
+              <label>Delivery Address *</label>
+              <textarea id="address"
+                placeholder="Street, building, city, postal code" required></textarea>
+            </div>
+
+            <!-- ✅ Delivery Date -->
+            <div class="form-group">
+              <label>Delivery Date *</label>
+              <input type="date" id="deliveryDate" required />
+            </div>
+
+            <!-- ❌ Occasion - REMOVED -->
+
+            <!-- ✅ Payment Method - E-Wallet REMOVED -->
+            <div class="form-group">
+              <label>Payment Method *</label>
+              <select id="paymentMethod" required>
+                <option value="">Choose payment method</option>
+                <option value="Cash on Delivery">💵 Cash on Delivery</option>
+                <option value="Bank Transfer">🏦 Bank Transfer</option>
+                <option value="Pay on Pickup">🏪 Pay on Pickup</option>
+              </select>
+            </div>
+
+            <!-- ✅ Special Notes -->
+            <div class="form-group">
+              <label>Special Notes</label>
+              <textarea id="notes"
+                placeholder="Flavor preferences, allergies, message on cake, special design requests..."></textarea>
+            </div>
+
+            <button class="place-btn" type="submit" id="placeBtn">
+              💬 Place Order via WhatsApp
+            </button>
+
+            <p class="checkout-note">
+              Clicking the button will open WhatsApp with your full order
+              summary so Marlisa can confirm quickly.
+            </p>
+
+            <div class="checkout-trust">
+              <span class="trust-item">🔒 Secure</span>
+              <span class="trust-item">🕐 2hr Confirmation</span>
+              <span class="trust-item">🎂 Fresh Daily</span>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif">
+  <span class="notif-icon" id="notifIcon">🎂</span>
+  <div>
+    <div class="notif-title" id="notifTitle">Done!</div>
+    <div class="notif-msg" id="notifMsg">Action completed.</div>
+  </div>
+</div>
+
+<!-- FOOTER - LOGO + TAGLINE + COPYRIGHT ONLY -->
+<footer>
+  <div class="footer-content">
+
+    <div class="footer-logo">
+      <div class="logo-icon">🥐</div>
+      <span class="logo-text">Marlisa's <span>Pastries</span></span>
+    </div>
+
+    <p class="footer-tagline">
+      Freshly baked with love, delivered to your door 🎂
+    </p>
+
+    <p class="footer-bottom">
+      © 2025 Marlisa's Pastries. Made with
+      <span style="color:var(--primary)">♥</span>
+      & lots of butter. All rights reserved.
+    </p>
+
+  </div>
+</footer>
+
+<script>
+  const CART_KEY  = 'marlisaCart';
+  const WA_NUMBER = '6281363869750';
+
+  /* ─── helpers ─── */
+  function getCart()   { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+  function saveCart(c) { localStorage.setItem(CART_KEY, JSON.stringify(c)); renderCart(); }
+  function money(n)    { return '$' + Number(n || 0).toFixed(2); }
+
+  /* ─── notification ─── */
+  function showNotif(icon, title, msg) {
+    document.getElementById('notifIcon').textContent  = icon;
+    document.getElementById('notifTitle').textContent = title;
+    document.getElementById('notifMsg').textContent   = msg;
+    const el = document.getElementById('notif');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3500);
+  }
+
+  /* ─── render ─── */
+  function renderCart() {
+    const cart     = getCart();
+    const cartList = document.getElementById('cartList');
+    const empty    = document.getElementById('emptyState');
+    const summary  = document.getElementById('summaryBox');
+    const label    = document.getElementById('cartCountLabel');
+    const placeBtn = document.getElementById('placeBtn');
+
+    const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+    label.textContent = totalQty === 0
+      ? '0 items selected'
+      : `${totalQty} item${totalQty > 1 ? 's' : ''} selected`;
+
+    if (!cart.length) {
+      cartList.innerHTML    = '';
+      empty.style.display   = 'block';
+      summary.style.display = 'none';
+      if (placeBtn) placeBtn.disabled = true;
+      return;
+    }
+
+    empty.style.display   = 'none';
+    summary.style.display = 'block';
+    if (placeBtn) placeBtn.disabled = false;
+
+    cartList.innerHTML = cart.map((item, i) => {
+      const imgHtml = item.image
+        ? `<img src="${item.image}" alt="${item.name}"
+               onerror="this.style.display='none';
+                        this.parentElement.textContent='${item.emoji || '🍰'}';" />`
+        : (item.emoji || '🍰');
+
+      return `
+        <div class="cart-item">
+          <div class="thumb">${imgHtml}</div>
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-meta">Unit price: ${money(item.price)}</div>
+            <div class="item-price">${money(item.price * item.qty)}</div>
+          </div>
+          <div class="controls">
+            <div class="qty-row">
+              <button class="qty-btn" onclick="changeQty(${i}, -1)"
+                title="Decrease">−</button>
+              <span class="qty">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${i}, 1)"
+                title="Increase">+</button>
+            </div>
+            <button class="remove-btn"
+              onclick="removeItem(${i})">🗑 Remove</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    /* ─── summary maths ─── */
+    /* ❌ NO delivery fee, NO tax - Total = Subtotal only */
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const total    = subtotal;
+
+    document.getElementById('subtotal').textContent = money(subtotal);
+    document.getElementById('total').textContent    = money(total);
+  }
+
+  /* ─── cart actions ─── */
+  function changeQty(index, delta) {
+    const cart = getCart();
+    if (!cart[index]) return;
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    saveCart(cart);
+  }
+
+  function removeItem(index) {
+    const cart = getCart();
+    const name = cart[index]?.name || 'Item';
+    cart.splice(index, 1);
+    saveCart(cart);
+    showNotif('🗑', 'Removed', `${name} removed from your cart.`);
+  }
+
+  function clearCart() {
+    if (!getCart().length) return;
+    if (confirm('Are you sure you want to clear your entire cart?')) {
+      localStorage.removeItem(CART_KEY);
+      renderCart();
+      showNotif('🗑', 'Cart Cleared', 'All items have been removed.');
+    }
+  }
+
+  /* ─── place order ─── */
+  function placeOrder() {
+    const cart = getCart();
+    if (!cart.length) {
+      showNotif('⚠️', 'Empty Cart', 'Please add at least one item.');
+      return;
+    }
+
+    const name    = document.getElementById('fullName').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const date    = document.getElementById('deliveryDate').value;
+    const payment = document.getElementById('paymentMethod').value;
+    const notes   = document.getElementById('notes').value.trim();
+
+    if (!name || !phone || !address || !date || !payment) {
+      showNotif('⚠️', 'Missing Fields', 'Please fill in all required fields.');
+      return;
+    }
+
+    /* ❌ NO delivery fee, NO tax - Total = Subtotal only */
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const total    = subtotal;
+
+    const itemLines = cart
+      .map(i => `  • ${i.qty}x ${i.name} @ ${money(i.price)} = ${money(i.price * i.qty)}`)
+      .join('\n');
+
+    const msg = [
+      `🥐 *New Order — Marlisa's Pastries*`,
+      ``,
+      `*👤 Customer*`,
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      ``,
+      `*📦 Delivery*`,
+      `Address: ${address}`,
+      `Date: ${date}`,
+      `Payment: ${payment}`,
+      ``,
+      `*🎂 Order Items*`,
+      itemLines,
+      ``,
+      `*💰 Summary*`,
+      `Subtotal: ${money(subtotal)}`,
+      /* ❌ Delivery Fee line - TOTALLY REMOVED */
+      /* ❌ Tax line - TOTALLY REMOVED */
+      `*Total: ${money(total)}*`,
+      ``,
+      `*📝 Notes*`,
+      notes || 'None',
+    ].join('\n');
+
+    window.open(
+      `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,
+      '_blank'
+    );
+
+    /* Show success screen */
+    document.getElementById('checkoutPanel').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+
+    localStorage.removeItem(CART_KEY);
+    renderCart();
+  }
+
+  /* ─── set min delivery date ─── */
+  const deliveryDate = document.getElementById('deliveryDate');
+  if (deliveryDate) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    deliveryDate.min = tomorrow.toISOString().split('T')[0];
+  }
+
+  /* ─── init ─── */
+  renderCart();
+
+  console.log("%c🛒 Marlisa's Cart Page Loaded!",
+    'color:#c0556a; font-size:14px; font-weight:bold;');
+</script>
+</body>
+</html>
